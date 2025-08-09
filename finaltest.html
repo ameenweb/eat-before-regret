@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>How Many Can You Eat? — Fun & (More) Real</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#fff8f3;
+    --bg2:#fff1ea;
+    --card:#ffffff;
+    --accent:#e85b4f;
+    --muted:#6b6b6b;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family: 'Poppins', sans-serif;
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: linear-gradient(160deg,var(--bg1),var(--bg2));
+    color:#222;
+    padding:24px;
+  }
+
+  .card{
+    width:100%;
+    max-width:920px;
+    background:var(--card);
+    border-radius:18px;
+    box-shadow: 0 12px 40px rgba(22,22,22,0.08);
+    padding:28px;
+    display:grid;
+    grid-template-columns: 420px 1fr;
+    gap:22px;
+    align-items:start;
+  }
+
+  .left{
+    padding:18px;
+    border-radius:12px;
+    background:linear-gradient(180deg, rgba(232,91,79,0.03), rgba(232,91,79,0.01));
+  }
+  h1{
+    margin:0 0 8px 0;
+    color:var(--accent);
+    font-size:20px;
+    line-height:1.1;
+  }
+  p.lead{
+    margin: 0 0 14px 0;
+    color:var(--muted);
+    font-size:14px;
+  }
+
+  label{ display:block; font-size:13px; color:#444; margin-top:12px; margin-bottom:6px }
+  input[type=number], select {
+    width:100%;
+    padding:10px 12px;
+    font-size:14px;
+    border-radius:10px;
+    border:1px solid #e8e8e8;
+    background:#fbfbfb;
+    outline:none;
+  }
+  .row { display:flex; gap:10px }
+  .small { flex:1 }
+  .btn{
+    display:inline-block;
+    margin-top:16px;
+    background:linear-gradient(90deg,var(--accent),#d64a41);
+    color:#fff;
+    border:none;
+    padding:11px 16px;
+    border-radius:12px;
+    font-weight:600;
+    cursor:pointer;
+    box-shadow: 0 8px 20px rgba(232,91,79,0.14);
+  }
+  .btn:active{ transform:translateY(1px) }
+
+  /* right column: result */
+  .right {
+    padding:20px;
+    border-radius:12px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    min-height:280px;
+    justify-content:flex-start;
+  }
+
+  .result-card{
+    background: linear-gradient(180deg,#fff,#fff8f6);
+    border-radius:12px;
+    padding:18px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+    border:1px solid #f2e6e3;
+  }
+
+  .big-number{
+    font-size:42px;
+    font-weight:700;
+    color:#222;
+    margin:6px 0;
+  }
+  .muted { color:var(--muted); font-size:13px }
+
+  .doodle{
+    width:72px;
+    height:72px;
+    border-radius:14px;
+    background: linear-gradient(180deg, #fff, #fff7f5);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:34px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    border:1px solid #fde9e6;
+  }
+
+  .result-row { display:flex; gap:14px; align-items:center }
+
+  .message {
+    font-size:15px;
+    line-height:1.4;
+  }
+
+  .footer {
+    margin-top:auto;
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  /* responsive */
+  @media (max-width:880px){
+    .card{ grid-template-columns: 1fr; }
+    .left, .right { padding:14px }
+  }
+</style>
+</head>
+<body>
+
+<div class="card" role="application" aria-label="Food limit calculator">
+  <div class="left">
+    <h1>How many can you eat before you regret it?</h1>
+    <p class="lead">Realistic-ish estimate based on stomach capacity. Playful and slightly mocking—entertainment only.</p>
+
+    <label for="weight">Weight (kg)</label>
+    <input id="weight" type="number" min="20" step="0.1" placeholder="e.g. 70">
+
+    <div class="row" style="margin-top:6px">
+      <div class="small">
+        <label for="height">Height (cm)</label>
+        <input id="height" type="number" min="80" step="1" placeholder="e.g. 170">
+      </div>
+      <div class="small">
+        <label for="age">Age (years)</label>
+        <input id="age" type="number" min="10" step="1" placeholder="e.g. 25">
+      </div>
+    </div>
+
+    <label for="food">Pick a food</label>
+    <select id="food">
+      <option value="porotta">Porotta — typical Kerala porotta (≈ 80 g)</option>
+      <option value="samosa">Samosa — fried (≈ 100 g)</option>
+      <option value="pizza">Pizza slice — standard (≈ 150 g)</option>
+      <option value="burger">Burger — medium (≈ 200 g)</option>
+      <option value="donut">Donut — glazed (≈ 70 g)</option>
+      <option value="icecream">Ice cream scoop (≈ 100 g)</option>
+    </select>
+
+    <label for="mode" style="margin-top:14px">Mode</label>
+    <select id="mode">
+      <option value="normal">Comfort (80% of capacity) — realistic</option>
+      <option value="brave">Brave (100% of capacity) — pushing it</option>
+      <option value="champ">Champion (stretch factor 1.8) — competitive-eating style (not recommended)</option>
+    </select>
+
+    <button class="btn" onclick="runCalc()">Reveal My Limit</button>
+
+    <div class="footer" style="margin-top:14px">
+      <div><strong>Note:</strong> This uses an estimate of stomach capacity scaled by body weight and average food weight to give an approximate count. For fun only.</div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="result-card" id="resultCard" aria-live="polite">
+      <div style="display:flex; justify-content:space-between; align-items:center">
+        <div>
+          <div class="muted">Estimated safe pieces</div>
+          <div id="number" class="big-number">—</div>
+          <div id="capacityText" class="muted">Enter details and press the button.</div>
+        </div>
+        <div class="doodle" id="doodle">🍽</div>
+      </div>
+
+      <hr style="margin:14px 0;border:none;border-top:1px solid #f6e9e6">
+
+      <div id="message" class="message muted">Results will appear here — slightly mocking, never mean.</div>
+    </div>
+
+    
+  </div>
+</div>
+
+<script>
+/*
+ Realistic-ish model explained:
+ - Base stomach capacity (liters) ~ 1.0 L for an average adult.
+ - Scale gently by weight: capacity_l = 1.0 + 0.015 * (weight - 60)
+   (so a 80 kg person gets ~1.3 L). Clamped reasonable range.
+ - Mode selects safety/stretch factor:
+    - normal: use 80% of capacity
+    - brave: 100% of capacity
+    - champ: multiply capacity by 1.8 (competitive)
+ - Food average weights (grams) used to compute pieces:
+    pieces = (capacity_kg * safetyFactor) / (foodWeight_kg)
+*/
+
+const foodData = {
+  porotta: { name: "Porotta", grams: 80, emoji: "🫓" },
+  samosa:  { name: "Samosa",  grams:100, emoji: "🥟" },
+  pizza:   { name: "Pizza slice", grams:150, emoji: "🍕" },
+  burger:  { name: "Burger", grams:200, emoji: "🍔" },
+  donut:   { name: "Donut", grams:70, emoji: "🍩" },
+  icecream: { name: "Ice cream scoop", grams:100, emoji: "🍨" }
+};
+
+const messagesByRange = {
+  low: [
+    (n, food) => `💀 Only ${n} ${food}? That's the "tap out after appetizer" club. Don't try to impress anyone.`,
+    (n, food) => `😬 ${n} ${food}. Respect your limits — and maybe avoid challenges.`,
+    (n, food) => `🤏 ${n}? Cute. You can still be adorable while declining extra helpings.`
+  ],
+  mid: [
+    (n, food) => `👍 ${n} ${food} — solid. You could survive a street-food crawl without crying.`,
+    (n, food) => `😏 ${n}. Not reckless, not boring. Nicely balanced.`,
+    (n, food) => `🔥 ${n} ${food} — impressive appetite. Bring napkins.`
+  ],
+  high: [
+    (n, food) => `😈 ${n} ${food}? Alright, you either have a hollow leg or a secret lair of snacks.`,
+    (n, food) => `🚨 ${n}! Your stomach may demand a postal address after this.`,
+    (n, food) => `💥 ${n} ${food} — you are flirting with chaos. Worth it? Possibly.`
+  ]
+};
+
+function clamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
+
+function runCalc(){
+  const weight = parseFloat(document.getElementById('weight').value);
+  const height = parseFloat(document.getElementById('height').value); // not used for core calc but kept
+  const age = parseFloat(document.getElementById('age').value); // not used for core calc but could factor later
+  const foodKey = document.getElementById('food').value;
+  const mode = document.getElementById('mode').value;
+
+  const numberEl = document.getElementById('number');
+  const capacityText = document.getElementById('capacityText');
+  const doodle = document.getElementById('doodle');
+  const messageEl = document.getElementById('message');
+
+  if (!weight || !height || !age){
+    numberEl.textContent = '—';
+    capacityText.textContent = 'Please fill weight, height and age.';
+    doodle.textContent = '❗';
+    messageEl.textContent = 'Fill all fields to get an estimate.';
+    return;
+  }
+
+  // base capacity in liters
+  let baseCapacityL = 1.0 + 0.015 * (weight - 60); // 1.0 L at 60 kg
+  baseCapacityL = clamp(baseCapacityL, 0.8, 4.0); // reasonable clamp: 0.8L to 4L
+
+  let safetyFactor = 0.8;
+  if (mode === 'normal') safetyFactor = 0.8;
+  else if (mode === 'brave') safetyFactor = 1.0;
+  else if (mode === 'champ') safetyFactor = 1.8;
+
+  // mass ~ volume for approximate food density (kg ~ liters)
+  let usableCapacityKg = baseCapacityL * safetyFactor; // treat liters as kg roughly
+  // get food weight in kg
+  const food = foodData[foodKey];
+  const pieceKg = food.grams / 1000;
+
+  // compute pieces
+  let rawPieces = usableCapacityKg / pieceKg;
+  // round down but at least 0
+  let pieces = Math.max(0, Math.floor(rawPieces));
+
+  // Tweak for realism:
+  // small people should not get huge counts; large items reduce count; clamp upper bound
+  pieces = clamp(pieces, 0, 200);
+
+  // Build UI text
+  numberEl.textContent = pieces;
+  capacityText.textContent = `Estimated usable capacity: ${ (usableCapacityKg).toFixed(2) } kg (${ (baseCapacityL).toFixed(2) } L × ${ (safetyFactor*100).toFixed(0)}%)`;
+  doodle.textContent = food.emoji;
+
+  // choose message set by range
+  let range = 'mid';
+  if (pieces <= 3) range = 'low';
+  else if (pieces >= 13) range = 'high';
+  else range = 'mid';
+
+  const list = messagesByRange[range];
+  const chosen = list[Math.floor(Math.random() * list.length)];
+  const resultMsg = chosen(pieces, food.name);
+
+  // append small extra realism notes
+  let extra = '';
+  if (mode === 'champ') extra = ' (competitive mode — extreme and not advised!)';
+  if (pieces === 0) extra = ' Also: try something light first.';
+
+  messageEl.innerHTML = `${resultMsg} <div style="margin-top:8px; font-size:13px; color:#666">Note${extra}</div>`;
+}
+
+// copy result to clipboard
+function copyResult(){
+  const pieces = document.getElementById('number').textContent;
+  const foodKey = document.getElementById('food').value;
+  const food = foodData[foodKey];
+  const txt = `Estimated: ${pieces} x ${food.name} (${food.emoji}) — from Fun Calculator`;
+  navigator.clipboard?.writeText(txt).then(()=>{
+    alert('Result copied to clipboard!');
+  }, ()=>{ alert('Could not copy.'); });
+}
+
+// init with nice defaults
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('weight').value = 70;
+  document.getElementById('height').value = 170;
+  document.getElementById('age').value = 25;
+  runCalc();
+});
+</script>
+</body>
+</html>
