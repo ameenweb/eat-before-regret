@@ -8,7 +8,7 @@ Team Members
 
 Team Lead: Ameen P C - Sullamussalam Science College
 
-Member 2: Zain Ashraf - Sullamussalam Science College
+Member : Zain Ashraf - Sullamussalam Science College
 
 Project Description
 
