@@ -1,1 +1,1 @@
-# eat-before-regret
+# eat before you regret
